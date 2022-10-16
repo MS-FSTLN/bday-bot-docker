@@ -11,11 +11,7 @@ const LANGUAGE = {
     'bday-multiple': '@{{sender}}, Heute haben {{bdayUsers}} Geburtstag. Alles Gute! wurstPARTY wurstPARTY wurstPARTY',
     'bday-nobody': '@{{sender}}, Heute hat leider niemand in der Wurstbude Geburtstag! Sadge wurstFEDDICH',
     'bday-no-entry': '@{{sender}}, @{{bdayUser}} ist noch nicht in die Geburtstagsliste eingetragen! D:',
-    'bday-user-date': '@{{sender}}, @{{bdayUser}} hat am {{bdayDate}} Geburtstag! Das ist in {{time}}!',
-    'month': 'Monat',
-    'months': 'Monate',
-    'week': 'Woche',
-    'weeks': 'Wochen',
+    'bday-user-date': '@{{sender}}, @{{bdayUser}} hat am {{bdayDate}} Geburtstag! Das ist schon in {{time}}! POGGIES',
     'day': 'Tag',
     'days': 'Tagen',
     'hour': 'Stunde',
@@ -34,6 +30,5 @@ const LANGUAGE = {
  * @returns The language file requested or '{ LANG_STRING_MISSING }'
  */
 export function getLang(language, type) {
-  console.log(language, type);
   return (typeof LANGUAGE[language][type] != 'undefined') ? LANGUAGE[language][type] : '{ LANG_STRING_MISSING }';
 }

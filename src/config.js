@@ -6,7 +6,6 @@ const config = {
   TWITCH_CHANNELS: [
     'INPUT-CHANNEL-NAME-HERE'
   ],
-  SUMMER_TIME: true,
   COMMAND_PREFIX: '!',
   LANGUAGE: 'de'
 };

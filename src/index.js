@@ -1,9 +1,8 @@
 import tmi from 'tmi.js';
-import axios from 'axios';
-import ical from 'ical';
 
 import config from './config.js';
 import { getLang } from './lang.js';
+import { onError, todayEvents, allEvents, getBdayDate, getSecRemain, secondsToDhms } from './helper.js';
 
 // Init new tmi.js Client
 const client = new tmi.Client({
@@ -14,132 +13,7 @@ const client = new tmi.Client({
     username: config.BOT_USERNAME,
     password: config.TWITCH_OAUTH_TOKEN,
   },
-  channels: [],
 });
-
-/**
- * Display the error in the console
- * @param {*} error Error message
- */
-function onError(error) {
-  console.error("Error:", error);
-}
-
-/**
- * Get todays google events from calendar
- * @returns Object with calendar entries
- */
-async function todayEvents() {
-  const { data } = await axios.get(`https://calendar.google.com/calendar/ical/${config.GOOGLE_CALENDAR_ID}/public/basic.ics`);
-  const events = ical.parseICS(data);
-  var rightNow = new Date();
-  config.SUMMER_TIME ? rightNow.setHours(0,0,0,0) : rightNow.setHours(1,0,0,0);
-  return Object.values(events)
-    .filter((event) => {
-      var date = event.start.toLocaleString('de-DE').split('T')[0];
-      var month = date.split('.')[0];
-      var day = date.split('.')[1];
-      var dateNow = rightNow.toLocaleString('de-DE').split('T')[0];
-      var monthNow = dateNow.split('.')[0];
-      var dayNow = dateNow.split('.')[1];
-      return month == monthNow && dayNow == day;
-    });;
-}
-
-/**
- * Get all google events from calendar
- * @returns Object with calendar entries
- */
-async function allEvents() {
-  const { data } = await axios.get(`https://calendar.google.com/calendar/ical/${config.GOOGLE_CALENDAR_ID}/public/basic.ics`);
-  const events = ical.parseICS(data);
-  return Object.values(events);
-}
-
-/**
- * Convert input date to bday date
- * @param {*} eventDate Input date
- * @returns Converted bday date
- */
-function getBdayDate(eventDate) {
-  var rightNow = new Date();
-
-  var date = eventDate.toLocaleString('de-DE').split(', ')[0];
-  var day = Number(date.split('.')[0]);
-  var month = Number(date.split('.')[1]);
-  var year = Number(date.split('.')[2]);
-
-  var dateNow = rightNow.toLocaleString('de-DE').split(', ')[0];
-  var dayNow = Number(dateNow.split('.')[0]);
-  var monthNow = Number(dateNow.split('.')[1]);
-  var yearNow = Number(dateNow.split('.')[2]);
-
-  if(monthNow > month) {
-    year = yearNow + 1;
-  }
-  else if(dayNow > day && monthNow == month) {
-    year = yearNow + 1;
-  } else {
-    year = yearNow;
-  }
-
-  if(day < 10) day = `0${day}`;
-  if(month < 10) month = `0${month}`;
-  return `${day}.${month}.${year}`;
-}
-
-/**
- * Convert input date to seconds
- * @param {*} eventDate Input date
- * @returns Converted date to seconds
- */
-function getSecRemain(eventDate) {
-  var rightNow = new Date();
-
-  var date = eventDate.toLocaleString('de-DE').split(', ')[0];
-  var day = Number(date.split('.')[0]);
-  var month = Number(date.split('.')[1]);
-  var year = Number(date.split('.')[2]);
-
-  var dateNow = rightNow.toLocaleString('de-DE').split(', ')[0];
-  var dayNow = Number(dateNow.split('.')[0]);
-  var monthNow = Number(dateNow.split('.')[1]);
-  var yearNow = Number(dateNow.split('.')[2]);
-
-  if(monthNow > month) {
-    year = yearNow + 1;
-  }
-  else if(dayNow > day && monthNow == month) {
-    year = yearNow + 1;
-  } else {
-    year = yearNow;
-  }
-  
-  var seconds1 = new Date(year, month, day).getTime() / 1000;
-  var seconds2 = new Date(yearNow, monthNow, dayNow).getTime() / 1000;
-  var seconds = seconds1 - seconds2;
-  return seconds;
-}
-
-/**
- * Get time from now to date entered
- * @param {*} dasecondste Input seconds
- */
- async function secondsToDhms(seconds) {
-  var result = "";
-  seconds = Number(seconds);
-  var d = Math.floor(seconds / (3600 * 24));
-  var h = Math.floor(seconds % (3600 * 24) / 3600);
-  var m = Math.floor(seconds % 3600 / 60);
-  var s = Math.floor(seconds % 60);
-
-  var dDisplay = d > 0 ? d + (d == 1 ? ` ${await getLang('de', 'day')}, ` : ` ${await getLang('de', 'days')}, `) : "";
-  var hDisplay = h > 0 ? h + (h == 1 ? ` ${await getLang('de', 'hour')}, ` : ` ${await getLang('de', 'hours')}, `) : "";
-  var mDisplay = m > 0 ? m + (m == 1 ? ` ${await getLang('de', 'minute')}, ` : ` ${await getLang('de', 'minutes')}, `) : "";
-  var sDisplay = s > 0 ? s + (s == 1 ? ` ${await getLang('de', 'second')}` : ` ${await getLang('de', 'seconds')}`) : "";
-  result = d > 7 ? dDisplay.replace(', ', '') : (dDisplay + hDisplay + mDisplay + sDisplay).replace(/,\s*$/, "");
-  return result;
-}
 
 /**
  * Handle bot commands
