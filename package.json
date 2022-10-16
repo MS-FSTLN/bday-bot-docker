@@ -1,0 +1,28 @@
+{
+  "name": "bday-bot",
+  "version": "1.0.0",
+  "description": "Streamwurstbuden Geburtstagsbot",
+  "keywords": ["bot", "twitch", "bday", "geburtstag"],
+  "authors": [
+    "godemorje",
+    "letsiii <letsi@letsi.de>"
+  ],
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@types/node": "^18.11.0",
+    "@types/tmi.js": "^1.8.2",
+    "dotenv": "^16.0.3",
+    "tmi.js": "^1.8.5",
+    "axios": "^1.1.3",
+    "ical": "^0.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "license": "MIT"
+}
