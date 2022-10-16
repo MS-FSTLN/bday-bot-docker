@@ -4,12 +4,80 @@ import ical from 'ical';
 import config from './config.js';
 import { getLang } from './lang.js';
 
+// User and global timestamp store
+var timestamps = {
+  global: {},
+  users: {},
+}
+
 /**
  * Display the error in the console
  * @param {*} error Error message
  */
 export function onError(error) {
   console.error("Error:", error);
+}
+
+/**
+ * Returns an object containing the time period since last user interaction, and last interaction from any user in `ms`.
+ * @param {*} command Command that is on cooldown
+ * @param {*} userId User Id that triggered the command
+ * @returns cooldown time
+ */
+export function getCooldown(command, userId) {
+  if (!command) {
+    return {
+      any: null,
+      user: null,
+    }
+  }
+  
+  var now = new Date();
+  var res = {};
+
+  if (timestamps.global[command]) {
+    res["any"] = now - timestamps.global[command];
+  }
+
+  // store and update global since-last timestamp
+  if (userId) {
+    if (!timestamps.users[userId]) {
+      timestamps.users[userId] = {};
+    }
+
+    if (timestamps.users[userId][command]) {
+      res["user"] = now - timestamps.users[userId][command];
+    }
+  } else {
+    res["user"] = null;
+  }
+
+  return res
+}
+
+
+/**
+ * Sets time period since last user interaction, and last interaction from any user in `ms` and returns an object containing the time
+ * @param {*} command Command that is on cooldown
+ * @param {*} userId User Id that triggered the command
+ * @returns cooldown time
+ */
+export function setCooldown(command, userId) {
+  if (!command) return;
+
+  var now = new Date();
+
+  // update the global since-last timestamp
+  timestamps.global[command] = now;
+
+  // store and update users since-last timestamp
+  if (userId) {
+    if (!timestamps.users[userId]) {
+      timestamps.users[userId] = {};
+    }
+
+    timestamps.users[userId][command] = now
+  }
 }
 
 /**

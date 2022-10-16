@@ -2,7 +2,7 @@ import tmi from 'tmi.js';
 
 import config from './config.js';
 import { getLang } from './lang.js';
-import { onError, todayEvents, allEvents, getBdayDate, getSecRemain, secondsToDhms } from './helper.js';
+import { onError, getCooldown, setCooldown, todayEvents, allEvents, getBdayDate, getSecRemain, secondsToDhms } from './helper.js';
 
 // Init new tmi.js Client
 const client = new tmi.Client({
@@ -26,6 +26,11 @@ const client = new tmi.Client({
 async function handleCommands(user, command, msg, flags, extra) {
   var args = msg.toLowerCase().split(' ');
   if (command === "geburtstag" || command === "bday") {
+    // Check for cooldown time in 'ms' (See example below)
+    // # Examples:
+    // extra.cooldown.any - check for the global cooldown time for the given command
+    // extra.cooldown.user - check for the user specific cooldown time for the given command
+    if(!flags.broadcaster && !flags.mod && extra.cooldown.any < 30000) return;
     if(args[0]) {
       var bdayUser = args[0].replace('@','').toLowerCase();
       var eventDate = "";
@@ -41,6 +46,8 @@ async function handleCommands(user, command, msg, flags, extra) {
       var time = await secondsToDhms(secRemain);
       var bdayDate = getBdayDate(eventDate); eventDate.toLocaleString('de-DE').split(', ')[0];
       var message = isListed ? await getLang(config.LANGUAGE, 'bday-user-date').replace('{{sender}}', user).replace('{{bdayUser}}', bdayUser).replace('{{bdayDate}}', bdayDate).replace('{{time}}', time) : await getLang(config.LANGUAGE, 'bday-no-entry').replace('{{sender}}', user).replace('{{bdayUser}}', bdayUser);
+      // Update Cooldown
+      setCooldown(command, extra.userId);
       return client.say(extra.channel, message);
     } else {
       var bdayUsers = [];
@@ -56,6 +63,8 @@ async function handleCommands(user, command, msg, flags, extra) {
       } else if (bdayUsers.length >= 2) {
         message = await getLang(config.LANGUAGE, 'bday-multiple').replace('{{sender}}', user).replace('{{bdayUsers}}', bdayUsers.join(', '));
       }
+      // Update Cooldown
+      setCooldown(command, extra.userId);
       return client.say(extra.channel, message);
     }
   }
@@ -140,6 +149,8 @@ async function initBot() {
         timestamp: messageTimestamp,
       };
       const msg = commandArgs[1] || "";
+      // Get Cooldown for specific command and user
+      extra["cooldown"] = getCooldown(commandName, userId);
       handleCommands(user, commandName, msg, flags, extra);
     } catch (error) {
       onError(error);

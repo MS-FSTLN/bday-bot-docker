@@ -28,6 +28,7 @@ Variable | Description
 GOOGLE_CALENDAR_ID | Google calendar ID. It will look like this: vru0ugbqpqi0hhtrfo6bru5d28@group.calendar.google.com
 BOT_USERNAME | The twitch username of the bot that will be used to send the messages.
 TWITCH_OAUTH_TOKEN | Twitch OAuth token for the given BOT_USERNAME - can be obtained here: https://twitchapps.com/tmi/
+TWITCH_CLIENT_ID | Twitch Client ID can be generated here: https://dev.twitch.tv/console/apps
 
 ### Config
 
