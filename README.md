@@ -8,6 +8,16 @@ A bot that gets the birthday dates from users in a google calendar and sends the
 * Docker
   * Docker Compose plugin >= 2.11.1
 
+## Pull from Docker Hub
+
+```sh
+docker pull msfstln/twitch-bday-bot:0.1.2
+```
+
+Proceed with Config
+
+## Manual build
+
 ### Setup
 
 Clone this repository
