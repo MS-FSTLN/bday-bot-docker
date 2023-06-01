@@ -5,14 +5,12 @@ on:
   workflow_dispatch
   push:
     branches:
-      - 'main'
-      - 'dev'
+      - 'master'
     tags:
       - 'v*.*.*'
   pull_request:
     branches:
-      - 'main'
-      - 'dev'
+      - 'master'
 
 # permissions are needed if pushing to ghcr.io
 permissions: 
