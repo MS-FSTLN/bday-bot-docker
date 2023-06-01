@@ -1,3 +1,4 @@
+![Docker image build](https://github.com/MS-FSTLN/bday-bot-docker/actions/workflows/docker-image.yml/badge.svg)
 # Birthday Bot
 
 A bot that gets the birthday dates from users in a google calendar and sends them into twitch chat.
