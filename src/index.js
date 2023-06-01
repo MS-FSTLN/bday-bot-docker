@@ -30,7 +30,7 @@ async function handleCommands(user, command, msg, flags, extra) {
     // # Examples:
     // extra.cooldown.any - check for the global cooldown time for the given command
     // extra.cooldown.user - check for the user specific cooldown time for the given command
-    if(!flags.broadcaster && !flags.mod && extra.cooldown.any < 30000) return;
+    if(!flags.broadcaster && !flags.mod && extra.cooldown.any < env.COOLDOWN) return;
     if(args[0]) {
       var bdayUser = args[0].replace('@','').toLowerCase();
       var eventDate = "";

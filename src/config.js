@@ -2,12 +2,9 @@ import env from './env.js';
 
 const config = {
   ...env,
-  // Change channel name here
-  TWITCH_CHANNELS: [
-    'INPUT-CHANNEL-NAME-HERE'
-  ],
-  COMMAND_PREFIX: '!',
-  LANGUAGE: 'de'
+  TWITCH_CHANNELS: process.env.TWITCH_CHANNELS.split(','),
+  COMMAND_PREFIX: env.PREFIX,
+  LANGUAGE: env.LANG
 };
 
 export default config;

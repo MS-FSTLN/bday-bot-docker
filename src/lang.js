@@ -7,11 +7,11 @@ const LANGUAGE = {
    * {{time}} - Replaced with the remaining time until birthday date
    */
   'de': {
-    'bday-single': '@{{sender}}, Heute hat {{bdayUsers}} Geburtstag. Alles Gute! wurstPARTY wurstPARTY wurstPARTY',
-    'bday-multiple': '@{{sender}}, Heute haben {{bdayUsers}} Geburtstag. Alles Gute! wurstPARTY wurstPARTY wurstPARTY',
-    'bday-nobody': '@{{sender}}, Heute hat leider niemand in der Wurstbude Geburtstag! Sadge wurstFEDDICH',
+    'bday-single': '@{{sender}}, Heute hat {{bdayUsers}} Geburtstag. Alles Gute! FeelsBirthdayMan',
+    'bday-multiple': '@{{sender}}, Heute haben {{bdayUsers}} Geburtstag. Alles Gute! FeelsBirthdayMan',
+    'bday-nobody': '@{{sender}}, Heute hat leider niemand Geburtstag! Sadge',
     'bday-no-entry': '@{{sender}}, @{{bdayUser}} ist noch nicht in die Geburtstagsliste eingetragen! D:',
-    'bday-user-date': '@{{sender}}, @{{bdayUser}} hat am {{bdayDate}} Geburtstag! Das ist schon in {{time}}! POGGIES',
+    'bday-user-date': '@{{sender}}, @{{bdayUser}} hat am {{bdayDate}} Geburtstag! Das ist schon in {{time}}! Wowee',
     'day': 'Tag',
     'days': 'Tagen',
     'hour': 'Stunde',
