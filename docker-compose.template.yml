@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  bot1:
+    restart: unless-stopped
+    image: YOUR-USER/twitch-bday-bot:0.0.5
+    environment:
+      GOOGLE_CALENDAR_ID: "YOUR_CALENDAR_ID@group.calendar.google.com"
+      BOT_USERNAME: YOUR_BOT_USERNAME
+      TWITCH_OAUTH_TOKEN: "oauth:YOUR_TWITCH_OAUTH_TOKEN"
+      TWITCH_CLIENT_ID: YOUR_TWITCH_CLIENT_ID
+      # Comma separated list of channels to join (no spaces)
+      TWITCH_CHANNELS: "channel1,channel2"
+      # two-lettered language code the bot should use (lower case), must be defined in lang.js. Defaults to de (german)
+      #LANG: de
+      # Command prefix (e.g. ! for !bday). Defaults to !
+      #PREFIX: "!"
+      # Cooldown in ms. Defaults to 30000 ms (30 sec.)
+      #COOLDOWN: 30000
+    # You may want to customize the bot messages. Define your own in lang.js and mount it into the container
+    #volumes:
+    #  - ./lang.js:/app/src/lang.js
