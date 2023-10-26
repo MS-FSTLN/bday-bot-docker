@@ -5,6 +5,7 @@ ENV NODE_ENV=production
 ENV PREFIX="!"
 ENV LANG=de
 ENV COOLDOWN=30000
+ENV TZ=UTC
 WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install --production

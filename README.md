@@ -49,6 +49,7 @@ TWITCH_CHANNELS | Comma separated list of channels to join. List must not contai
 LANG | Two-letter country code for messages. Must be defined in lang.js. Defaults to "de"
 PREFIX | Prefix of trigger command. Defaults to "!", trigger commands are then "!geburtstag" and "!bday"
 COOLDOWN | Cooldown of trigger commands in ms. Defaults to 30000 ms / 30 sec
+TZ | Timezone to interpret dates. Default: UTC
 
 If you want to customize the bot messages, edit them in lang.js and mount this file into the container /app/src/lang.js
 
